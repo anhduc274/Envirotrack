@@ -1,96 +1,85 @@
-# 📡 Airmeter – Android App & ESP32 Firmware Deployment Guide
+# 📡 Airmeter – Firmware & App Guide for LILYGO T-A7670G ESP32 with ThingSpeak Integration
 
-## 📦 Table of Contents
-- [1. Overview](#1-overview)
-- [2. Requirements](#2-requirements)
-- [3. Project Structure](#3-project-structure)
-- [4. Running the Android App (Airmeter)](#4-running-the-android-app-airmeter)
-- [5. Uploading Code to Lyligo A7670G ESP32](#5-uploading-code-to-lyligo-a7670g-esp32)
-- [6. Notes](#6-notes)
+## 🔧 1. Uploading Firmware to LILYGO TTGO T-A7670G ESP32
 
----
+### Requirements:
+- Arduino IDE (latest version)
+- ESP32 board package installed (via Boards Manager)
+- USB cable (data cable)
+- Nano SIM with active **4G data plan**
+- All firmware files (in `Mainboard code/` folder)
 
-## 1. 📌 Overview
-
-This project includes:
-
-- **Airmeter**: an Android application used to display and interact with sensor data.
-- **Firmware**: a set of code files running on the **Lyligo A7670G ESP32 board**, using a 4G module for connectivity.
-
----
-
-## 2. ⚙️ Requirements
-
-### For Android App
-- [Android Studio](https://developer.android.com/studio)
-- Android smartphone or emulator
-
-### For Firmware
-- [Arduino IDE](https://www.arduino.cc/en/software)
-- USB cable for ESP32
-- Installed board package for **ESP32 (by Espressif Systems)**
-- Libraries used (may be auto-included in the sketch folder)
+### Steps:
+1. Connect the **LILYGO T-A7670G ESP32** board to your computer using a USB cable.
+2. Open **Arduino IDE**.
+3. Go to `File → Open`, and select the `main.ino` file from the `Mainboard code/` folder.
+4. Ensure all files (`.ino`, `.cpp`, `.h`, etc.) are in the same directory.
+5. In `Tools` menu:
+   - **Board** → Select `ESP32 Dev Module`
+   - **Port** → Choose the correct COM port
+   - Optionally set **Flash Frequency** and **Upload Speed** (default values usually work)
+6. Press the **Upload** button (→).  
+   > ⚠️ If upload fails, press and hold the **BOOT** button on the board until upload starts.
 
 ---
 
-## 3. 📁 Project Structure
+## 📲 2. Installing and Running the Airmeter App
 
-```plaintext
-IOT/
-├── AndroidApp/             # Android Studio project (Airmeter)
-│   └── app/                # Source code of the mobile app
-│
-├── Mainboard code/         # Firmware files for Lyligo A7670G ESP32
-│   ├── main.ino            # Main firmware file
-│   ├── A7670G.cpp/h        # Files for 4G module
-│   └── ...                 # Additional required source files
-│
-└── README.md               # This guide
-4. 📲 Running the Android App (Airmeter)
-Open Android Studio.
+### Requirements:
+- Android Studio
+- Android phone or emulator
 
-Choose "Open an Existing Project".
+### Steps:
+1. Open **Android Studio**.
+2. Select **"Open an Existing Project"**, and open the folder `AndroidApp/`.
+3. Let Gradle sync finish.
+4. Connect your Android phone with USB debugging enabled.
+5. Click the green **Run** (▶️) button to build and install the app.
+6. The app is named **Airmeter** and will launch after installation.
 
-Navigate to the AndroidApp/ folder and open it.
+---
 
-Let Gradle finish syncing.
+## ☁️ 3. Viewing Sensor Data on ThingSpeak
 
-Connect an Android phone via USB or launch an emulator.
+This project uses **ThingSpeak** to upload and display sensor data (e.g. temperature, humidity).
 
-Press Run (green ▶️ button) to install and start Airmeter.
+### Steps:
+1. Go to [https://thingspeak.com](https://thingspeak.com) and sign in or create an account.
+2. Create a **New Channel** and:
+   - Name it (e.g. `Airmeter ESP32`)
+   - Add Fields (e.g. Field1: Temperature, Field2: Humidity, etc.)
+   - Save the channel.
+3. Go to **API Keys** tab → Copy your **Write API Key**.
 
-5. 🚀 Uploading Code to Lyligo A7670G ESP32
-Connect the Lyligo A7670G ESP32 board to your computer via USB.
+4. In the firmware (`main.py`), find the line like this:
+   ```cpp
+   String apiKey = "YOUR_API_KEY_HERE";
+Replace "YOUR_API_KEY_HERE" with your actual Write API Key from ThingSpeak.
 
-Open the Arduino IDE.
+Re-upload the code to your board using Arduino IDE.
 
-Go to File → Open, and select the main.ino file inside the Mainboard code/ folder.
+After boot, your ESP32 will connect via 4G and send data to ThingSpeak automatically every few seconds.
 
-Ensure all .cpp, .h, and .ino files in Mainboard code/ are in the same folder.
+Go to your ThingSpeak Channel → Click Private View / Public View to see real-time graphs.
 
-In Arduino IDE:
+🛠 4. Changing the API Key in the App
+If your app needs to display data from ThingSpeak, it may require a Read API Key.
 
-Go to Tools → Board → Select ESP32 Dev Module or Lyligo A7670G if available.
+To change it in the Android app:
+Open the Android project in Android Studio.
 
-Go to Tools → Port → Select the correct COM port.
+Look for a file sensor_dashboard.dart
+Find lines 109 and 110
+Replace it with your actual Read API Key from ThingSpeak.
 
-Click the Upload button (right arrow).
+Rebuild and reinstall the app using the Run button.
 
-Wait until upload completes.
+💡 Alternatively, you can pass the API key via settings in the app if it's supported.
 
-✅ All files inside Mainboard code/ are required. Simply placing them in the same folder is enough — no additional setup needed.
-
-⚠️ If upload fails, try holding the BOOT button when uploading.
-
-6. 📝 Notes
-The ESP32 communicates via 4G (A7670G module) — make sure your SIM card is inserted and activated.
-
-Check APN settings in the firmware (.ino or .cpp files).
-
-Data from the ESP32 is sent to the app (or server) via 4G.
-
-If the app does not receive data:
-
-Make sure the ESP32 successfully connects to the network.
-
-Check serial output in Arduino IDE (baud rate 115200).
+✅ Summary
+Task	Done From
+Upload firmware to ESP32	Arduino IDE
+Run Airmeter app	Android Studio
+View sensor data	ThingSpeak
+Update Write API Key	In main.py
+Update Read API Key	In Android app source
