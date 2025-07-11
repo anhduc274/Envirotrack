@@ -12,17 +12,7 @@
 ### Steps:
 1. Connect the **LILYGO T-A7670G ESP32** board to your computer using a USB cable.
 2. Open **Arduino IDE**.
-3. Go to `File → Open`, and select the `main.ino` file from the `Mainboard code/` folder.
-4. Ensure all files (`.ino`, `.cpp`, `.h`, etc.) are in the same directory.
-5. In `Tools` menu:
-   - **Board** → Select `ESP32 Dev Module`
-   - **Port** → Choose the correct COM port
-   - Optionally set **Flash Frequency** and **Upload Speed** (default values usually work)
-6. Press the **Upload** button (→).  
-   > ⚠️ If upload fails, press and hold the **BOOT** button on the board until upload starts.
-
----
-
+3. Upload all code files in the Mainboard Code File to the mainboard
 ## 📲 2. Installing and Running the Airmeter App
 
 ### Requirements:
