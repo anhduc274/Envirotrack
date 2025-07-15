@@ -3,7 +3,7 @@
 ## 🔧 1. Uploading Firmware to LILYGO TTGO T-A7670G ESP32
 
 ### Requirements:
-- Arduino IDE (latest version)
+- Thonny (latest version)
 - ESP32 board package installed (via Boards Manager)
 - USB cable (data cable)
 - Nano SIM with active **4G data plan**
@@ -11,7 +11,7 @@
 
 ### Steps:
 1. Connect the **LILYGO T-A7670G ESP32** board to your computer using a USB cable.
-2. Open **Arduino IDE**.
+2. Open **Thonny**.
 3. Upload all code files in the Mainboard Code File to the mainboard
 ## 📲 2. Installing and Running the Airmeter App
 
