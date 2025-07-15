@@ -24,7 +24,7 @@
 2. Select **"Open an Existing Project"**, and open the folder `AndroidApp/`.
 3. Let Gradle sync finish.
 4. Connect your Android phone with USB debugging enabled.
-5. Click the green **Run** (▶️) button to build and install the app.
+5. Click the  **Run** button to build and install the app.
 6. The app is named **Airmeter** and will launch after installation.
 
 ---
